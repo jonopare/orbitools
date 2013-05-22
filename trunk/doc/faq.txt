@@ -1,0 +1,15 @@
+Frequently Asked Questions:
+===========================
+Luckily we live in an information-rich age so you can find better information than I'd ever be able to create just by clicking on a few links (or copying and pasting them into your browser).
+
+Q: What is the International Space Station (ISS)?
+A: https://en.wikipedia.org/wiki/International_Space_Station
+
+Q: When can I see the ISS?
+A: Sign up for e-mail alerts from NASA at http://spotthestation.nasa.gov/
+
+Q: Why do I have to wait to see the ISS?
+A: It's best seen shortly after sunset or shortly before sunrise. The higher up you go in altitude, the earlier the sunrise (and later the sunset). In the period between sunset on Earth and sunset on the station, the sky is dark and the ISS is bright. "Sunset" on the ISS occurs when the ISS moves into the Earth's shadow. This can happen abruptly - if you're ever watching a pass and the bright ISS suddenly goes dark midway across the sky, it's probably just gone into the Earth's shadow.
+
+Q: Why does the ISS sometimes pass from north to south and othertimes from south to north?
+A: See the working example here!
