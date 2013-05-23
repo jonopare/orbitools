@@ -27,6 +27,21 @@ namespace Orbitools
             return f * d.Unit;
         }
 
+        public static Triplet[] Gravity(Body[] bodies)
+        {
+            var forces = new Triplet[bodies.Length];
+            for (int i = 0; i < bodies.Length; i++)
+            {
+                for (int j = i + 1; j < bodies.Length; j++)
+                {
+                    var f = bodies[i].Gravity(bodies[j]);
+                    forces[i] += f;
+                    forces[j] -= f;
+                }
+            }
+            return forces;
+        }
+
         /// <summary>
         /// (kg*m)/s    or    N*s
         /// </summary>
