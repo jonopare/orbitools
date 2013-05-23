@@ -13,3 +13,6 @@ A: It's best seen shortly after sunset or shortly before sunrise. The higher up 
 
 Q: Why does the ISS sometimes pass from north to south and othertimes from south to north?
 A: See the working example here!
+
+Q: How do you alter an orbit?
+A: Orbits are elliptical paths around a center of mass. The center of mass is not necessarily at the center of the ellipse. By slowing down at any point in the orbit, you will speed up (and also be closer to the center of mass) at the opposite point in the orbit. If the center of mass is physically large (e.g. the Earth) then slowing down might even cause you to impact the object at the center. Conversely, speeding up will slow you down at the opposite point of your orbit, but you'll be further away from the center.
