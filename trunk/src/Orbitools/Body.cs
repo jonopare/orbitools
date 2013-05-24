@@ -63,5 +63,26 @@ namespace Orbitools
             Position += movement;
             Velocity = movement / duration.TotalSeconds;
         }
+
+        /// <summary>
+        /// Mass ejection with conservation of momentum results in a new ejected body
+        /// moving away from this body and imparts motion to this body in proportion
+        /// to its new mass and the mass of the ejection.
+        /// </summary>
+        /// <param name="mass"></param>
+        /// <param name="velocity"></param>
+        /// <returns></returns>
+        public Body Eject(double mass, Triplet velocity)
+        {
+            if (mass > Mass)
+            {
+                throw new ArgumentOutOfRangeException("mass", "Ejected mass cannot exceed the mass of this body");
+            }
+
+            var result = new Body(mass, Position, velocity);
+            Mass -= mass;
+            Velocity -= result.Momentum / Mass;
+            return result;
+        }
     }
 }
