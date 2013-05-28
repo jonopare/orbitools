@@ -23,6 +23,10 @@ namespace Orbitools
         public Triplet Gravity(Body other)
         {
             var d = other.Position - this.Position;
+            if (d.Magnitude == 0)
+            {
+                return new Triplet();
+            }
             var f = G * (this.Mass * other.Mass) / Math.Pow(d.Magnitude, 2);
             return f * d.Unit;
         }
