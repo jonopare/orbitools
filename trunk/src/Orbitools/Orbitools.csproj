@@ -53,6 +53,7 @@
     <Compile Include="BodyBuilder.cs" />
     <Compile Include="Coordinates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Spheroid.cs" />
     <Compile Include="Triplet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
