@@ -25,7 +25,15 @@ namespace Orbitools
         {
             get
             {
-                return Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
+                return Math.Sqrt(MagnitudeSquared);
+            }
+        }
+
+        public double MagnitudeSquared
+        {
+            get
+            {
+                return Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2);
             }
         }
 

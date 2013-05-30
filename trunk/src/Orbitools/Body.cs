@@ -12,12 +12,19 @@ namespace Orbitools
         public double Mass { get; private set; }
         public Triplet Position { get; private set; }
         public Triplet Velocity { get; private set; }
+        public string Name { get; private set; }
 
         public Body(double mass, Triplet position, Triplet velocity)
         {
             Mass = mass;
             Position = position;
             Velocity = velocity;
+        }
+
+        public Body(double mass, Triplet position, Triplet velocity, string name)
+            :this(mass, position, velocity)
+        {
+            Name = name;
         }
 
         public Triplet Gravity(Body other)
@@ -31,12 +38,12 @@ namespace Orbitools
             return f * d.Unit;
         }
 
-        public static Triplet[] Gravity(Body[] bodies)
+        public static IList<Triplet> Gravity(IList<Body> bodies)
         {
-            var forces = new Triplet[bodies.Length];
-            for (int i = 0; i < bodies.Length; i++)
+            var forces = new Triplet[bodies.Count];
+            for (int i = 0; i < bodies.Count; i++)
             {
-                for (int j = i + 1; j < bodies.Length; j++)
+                for (int j = i + 1; j < bodies.Count; j++)
                 {
                     var f = bodies[i].Gravity(bodies[j]);
                     forces[i] += f;
@@ -87,6 +94,14 @@ namespace Orbitools
             Mass -= mass;
             Velocity -= result.Momentum / Mass;
             return result;
+        }
+
+        public bool IsInvalid
+        {
+            get
+            {
+                return double.IsNaN(Position.MagnitudeSquared) || double.IsNaN(Velocity.MagnitudeSquared);
+            }
         }
     }
 }

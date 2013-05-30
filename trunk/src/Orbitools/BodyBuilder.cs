@@ -46,9 +46,22 @@ namespace Orbitools
             return Position(new Triplet(x, y, z));
         }
 
+        public BodyBuilder Rotate(double clockwise)
+        {
+            var s = Math.Sin(clockwise);
+            var c = Math.Cos(clockwise);
+            return Position(position.X * c - position.Y * s, position.X * s + position.Y * c, position.Z)
+                .Direction(direction.X * c - direction.Y * s, direction.X * s + direction.Y * c, direction.Z);
+        }
+
         public Body ToBody()
         {
             return new Body(mass, position, direction * speed);
+        }
+
+        public Body ToBody(string name)
+        {
+            return new Body(mass, position, direction * speed, name);
         }
     }
 }
