@@ -23,17 +23,18 @@ namespace Orbitools
             Clock = new SiderealClock(Longitude);
 
             GeocentricParallax = GeocentricParallaxEffect.Create(latitude, longitude, 100);
-            AtmosphericRefraction = new AtmosphericRefractionEffect { BarometricPressureMillibars = 1050, TempDegreesC = 20 };
+            AtmosphericRefraction = new AtmosphericRefractionEffect { BarometricPressureMillibars = 1024, TempDegreesC = 16 };
         }
 
-        public HorizontalCoordinates ToAltAz(DateTime utc, Angle rightAscension, Angle declination)
+        public HorizontalCoordinates ToAltAz(DateTime utc, Angle rightAscension, Angle declination, double distance)
         {
             var lst = Clock.ToSiderealTime(utc);
             var hourAngle = (Angle.FromHours(lst.TotalHours) - rightAscension).Constrain();       
 
             var geocentric = EarthBasedObserver.ToAltAz(hourAngle, declination, Latitude);
-            //var parallaxAdjusted = GeocentricParallax.Distort(geocentric, 1e10);
-            return AtmosphericRefraction.Distort(geocentric);
+            var parallaxAdjusted = GeocentricParallax.Distort(geocentric, distance);
+            var refractionAdjusted = AtmosphericRefraction.Distort(parallaxAdjusted);
+            return refractionAdjusted;
         }
 
         public static HorizontalCoordinates ToAltAz(Angle ha, Angle dec, Angle lat)
