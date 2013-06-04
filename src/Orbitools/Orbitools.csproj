@@ -49,12 +49,19 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Angle.cs" />
+    <Compile Include="AtmosphericRefractionEffect.cs" />
     <Compile Include="Body.cs" />
     <Compile Include="BodyBuilder.cs" />
     <Compile Include="BodyEventArgs.cs" />
     <Compile Include="Coordinates.cs" />
+    <Compile Include="DistortionEffect.cs" />
+    <Compile Include="EarthBasedObserver.cs" />
+    <Compile Include="HorizontalCoordinates.cs" />
     <Compile Include="NBodyModel.cs" />
+    <Compile Include="GeocentricParallaxEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SiderealClock.cs" />
     <Compile Include="SolarSystem.cs" />
     <Compile Include="Spheroid.cs" />
     <Compile Include="Triplet.cs" />

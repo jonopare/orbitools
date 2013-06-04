@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Orbitools
+{
+    public struct HorizontalCoordinates
+    {
+        public Angle Alt;
+        public Angle Az;
+
+        public HorizontalCoordinates(Angle alt, Angle az)
+        {
+            if (alt.Degrees > 90 || alt.Degrees < -90)
+            {
+                // todo
+            }
+
+            Alt = alt;
+            Az = az;
+        }
+
+        public override string ToString()
+        {
+            return "AltDeg=" + Alt.Degrees + ",AzDeg=" + Az.Degrees;
+        }
+    }
+}
