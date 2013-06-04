@@ -18,7 +18,12 @@ namespace Orbitools
             }
 
             Alt = alt;
-            Az = az;
+            Az = az.Constrain();
+        }
+
+        public static HorizontalCoordinates operator -(HorizontalCoordinates a, HorizontalCoordinates b)
+        {
+            return new HorizontalCoordinates(a.Alt - b.Alt, a.Az - b.Az);
         }
 
         public override string ToString()

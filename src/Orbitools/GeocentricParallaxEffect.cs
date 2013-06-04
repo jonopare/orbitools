@@ -5,6 +5,12 @@ using System.Text;
 
 namespace Orbitools
 {
+    /// <summary>
+    /// This effect is very important for correcting vectors to close-up objects such
+    /// as artificial satellites and the Moon. I expect the class could be generalised
+    /// for reuse as the logic of stellar parallax is similar but where the Earth's orbit takes it 
+    /// away from the center of the Solar System.
+    /// </summary>
     public class GeocentricParallaxEffect
     {
         public double GeocentricDistanceToObserver { get; private set; }
@@ -21,26 +27,33 @@ namespace Orbitools
         }
 
         /// <summary>
-        /// Not taken from here:
-        /// http://books.google.co.uk/books?id=MTGYxQyW998C&pg=PA83&lpg=PA83&dq=geocentric+parallax+practical+astronomy+spreadsheet&source=bl&ots=ULfLQxMnWH&sig=jjpLbLJ6A797iIkpufmAJUToWGs&hl=en&sa=X&ei=ROytUdbkEebB0gWgnYD4DQ&redir_esc=y#v=onepage&q=geocentric%20parallax%20practical%20astronomy%20spreadsheet&f=false
+        /// I decided to write my own parallax adjustment instead of taking it from the Practical Astronomy book.
+        /// Let c be the center of the Earth (center of mass)
+        /// Let o be an observer at the surface of the Earth
+        /// Let m be the moon, which the observer is observing.
+        /// Let z be the observer's zenith.
+        /// The line CZ passes through O.
+        /// The plane OCM will never change and this means the azimuth won't change either.
+        /// The "horizontal" plane perpendicular to OC just needs to shift from C to O, with an accompanying change in altitude
         /// </summary>
-        /// <param name="vector"></param>
-        /// <param name="geocentricDistance"></param>
+        /// <param name="vector">Alt-az vector to the subject.</param>
+        /// <param name="geocentricDistance">Distance in meters from the center of the earth to the subject.</param>
         /// <returns></returns>
         public HorizontalCoordinates Distort(HorizontalCoordinates vector, double geocentricDistance)
         {
-            var x = geocentricDistance * Math.Cos(vector.Az.Radians) * Math.Sin(vector.Alt.Radians);
-            var y = geocentricDistance * Math.Sin(vector.Az.Radians) * Math.Sin(vector.Alt.Radians);
-            var z = geocentricDistance * Math.Cos(vector.Alt.Radians);
+            var z = Math.Sin(vector.Alt.Radians) * geocentricDistance;
+            var h = Math.Cos(vector.Alt.Radians) * geocentricDistance;
+            var x = Math.Sin(vector.Az.Radians) * h;
+            var y = Math.Cos(vector.Az.Radians) * h;
 
-            x -= GeocentricDistanceToObserver;
+            z -= GeocentricDistanceToObserver;
 
             var r = Math.Sqrt(x * x + y * y + z * z);
 
-            var theta = Math.Atan2(y, x);
-            var phi = Math.Acos(z / r);
+            //var az = Math.Atan2(x, y);
+            var alt = Math.Asin(z / r);
 
-            return new HorizontalCoordinates(Angle.FromRadians(phi), Angle.FromRadians(theta));
+            return new HorizontalCoordinates(Angle.FromRadians(alt), vector.Az/*Angle.FromRadians(az)*/);
         }
     }
 }
