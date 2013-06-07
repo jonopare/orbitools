@@ -20,7 +20,7 @@ namespace Orbitools
         public static Tuple<Angle, Angle> FromCartesian(Triplet vector)
         {
             var az = Math.Atan2(vector.X, vector.Y);
-            var alt = Math.Asin(vector.Z / vector.Magnitude);
+            var alt = Math.Asin(vector.Z / vector.Length);
 
             return new Tuple<Angle, Angle>(Angle.FromRadians(alt), Angle.FromRadians(az));
         }
@@ -32,7 +32,7 @@ namespace Orbitools
         {
             //(r, θ, φ) = radial distance, inclination (or elevation), and azimuth
 
-            var radius = cartesian.Magnitude;
+            var radius = cartesian.Length;
             var inclination = Math.Acos(cartesian.Z / radius);
             var azimuth = Math.Atan2(cartesian.Y, cartesian.X);
             return new Tuple<double, double, double>(radius, inclination, azimuth);

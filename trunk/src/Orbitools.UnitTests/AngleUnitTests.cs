@@ -9,8 +9,6 @@ namespace Orbitools
     [TestClass]
     public class AngleUnitTests
     {
-        
-
         [TestMethod]
         public void TwoPi_ReadonlyStatic_HasCorrectValue()
         {
@@ -51,6 +49,66 @@ namespace Orbitools
         public void Constrain_AboveOne_WithinBoundary()
         {
             Assert.AreEqual(1, Angle.FromDegrees(361).Constrain().Degrees, 1e-6);
+        }
+
+[TestMethod]
+        public void Constrain_NegativeOneQuarter_IsPositiveThreeQuarters()
+        {
+            var original = Angle.FromFraction(-1, 4);
+            var actual = original.Constrain();
+            var expected = Angle.FromFraction(3, 4);
+
+            Assert.AreEqual(expected.Degrees, actual.Degrees);
+        }
+
+        [TestMethod]
+        public void Constrain_NegativeFiveQuarters_IsPositiveThreeQuarters()
+        {
+            var original = Angle.FromFraction(-5, 4);
+            var actual = original.Constrain();
+            var expected = Angle.FromFraction(3, 4);
+
+            Assert.AreEqual(expected.Degrees, actual.Degrees);
+        }
+
+        [TestMethod]
+        public void Constrain_PositiveOneQuarter_IsPositiveOneQuarter()
+        {
+            var original = Angle.FromFraction(1, 4);
+            var actual = original.Constrain();
+            var expected = Angle.FromFraction(1, 4);
+
+            Assert.AreEqual(expected.Degrees, actual.Degrees);
+        }
+
+        [TestMethod]
+        public void Constrain_PositiveFiveQuarters_IsPositiveOneQuarter()
+        {
+            var original = Angle.FromFraction(5, 4);
+            var actual = original.Constrain();
+            var expected = Angle.FromFraction(1, 4);
+
+            Assert.AreEqual(expected.Degrees, actual.Degrees);
+        }
+
+        [TestMethod]
+        public void Constrain_ZeroQuarters_IsZeroQuarter()
+        {
+            var original = Angle.FromFraction(0, 4);
+            var actual = original.Constrain();
+            var expected = Angle.FromFraction(0, 4);
+
+            Assert.AreEqual(expected.Degrees, actual.Degrees);
+        }
+
+        [TestMethod]
+        public void Constrain_PositiveFourQuarters_IsZeroQuarter()
+        {
+            var original = Angle.FromFraction(4, 4);
+            var actual = original.Constrain();
+            var expected = Angle.FromFraction(0, 4);
+
+            Assert.AreEqual(expected.Degrees, actual.Degrees);
         }
 
         [TestMethod]

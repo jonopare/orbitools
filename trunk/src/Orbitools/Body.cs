@@ -30,11 +30,11 @@ namespace Orbitools
         public Triplet Gravity(Body other)
         {
             var d = other.Position - this.Position;
-            if (d.Magnitude == 0)
+            if (d.Length == 0)
             {
                 return new Triplet();
             }
-            var f = G * (this.Mass * other.Mass) / Math.Pow(d.Magnitude, 2);
+            var f = G * (this.Mass * other.Mass) / Math.Pow(d.Length, 2);
             return f * d.Unit;
         }
 
@@ -67,9 +67,9 @@ namespace Orbitools
         public void ApplyForce(Triplet force, TimeSpan duration)
         {
             var movement = Velocity * duration.TotalSeconds;
-            if (force.Magnitude != 0)
+            if (force.Length != 0)
             {
-                movement += force.Unit * (force.Magnitude / Mass * Math.Pow(duration.TotalSeconds, 2));
+                movement += force.Unit * (force.Length / Mass * Math.Pow(duration.TotalSeconds, 2));
             }
             Position += movement;
             Velocity = movement / duration.TotalSeconds;
@@ -100,7 +100,7 @@ namespace Orbitools
         {
             get
             {
-                return double.IsNaN(Position.MagnitudeSquared) || double.IsNaN(Velocity.MagnitudeSquared);
+                return double.IsNaN(Position.LengthSquared) || double.IsNaN(Velocity.LengthSquared);
             }
         }
     }

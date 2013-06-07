@@ -12,6 +12,7 @@ namespace Orbitools
     public struct Angle
     {
         public readonly static Angle TwoPi = Angle.FromRadians(Math.PI * 2);
+        public readonly static Angle Pi = Angle.FromRadians(Math.PI);
         public readonly static Angle PiOverTwo = Angle.FromRadians(Math.PI / 2);
         public readonly static Angle PiOverFour = Angle.FromRadians(Math.PI / 4);
         public readonly static Angle Zero = new Angle();

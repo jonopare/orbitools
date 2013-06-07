@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Orbitools
 {
-    [DebuggerDisplay("X={X} Y={Y} Z={Z} Mag={Magnitude}")]
+    [DebuggerDisplay("X={X} Y={Y} Z={Z} Len={Length}")]
     public struct Triplet
     {
         public double X { get; private set; }
@@ -21,15 +21,15 @@ namespace Orbitools
             Z = z;
         }
 
-        public double Magnitude
+        public double Length
         {
             get
             {
-                return Math.Sqrt(MagnitudeSquared);
+                return Math.Sqrt(LengthSquared);
             }
         }
 
-        public double MagnitudeSquared
+        public double LengthSquared
         {
             get
             {
@@ -69,13 +69,13 @@ namespace Orbitools
         {
             get
             {
-                return this / Magnitude;
+                return this / Length;
             }
         }
 
         public override string ToString()
         {
-            return string.Format("X={0} Y={1} Z={2} Mag={3}", X, Y, Z, Magnitude);
+            return string.Format("X={0} Y={1} Z={2} Len={3}", X, Y, Z, Length);
         }
     }
 }
