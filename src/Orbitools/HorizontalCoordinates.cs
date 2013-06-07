@@ -30,5 +30,12 @@ namespace Orbitools
         {
             return "AltDeg=" + Alt.Degrees + ",AzDeg=" + Az.Degrees;
         }
+
+        public EquatorialCoordinates ToEquatorial(TimeSpan localSiderealTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsInvalid { get { return double.IsNaN(Alt.Radians) || double.IsNaN(Az.Radians); } }
     }
 }

@@ -5,6 +5,27 @@ using System.Text;
 
 namespace Orbitools
 {
+    public static class CartesianCoordinates
+    {
+        public static Triplet ToCartesian(Angle ra, Angle dec, double geocentricDistance)
+        {
+            var z = Math.Sin(ra.Radians) * geocentricDistance;
+            var h = Math.Cos(ra.Radians) * geocentricDistance;
+            var x = Math.Sin(dec.Radians) * h;
+            var y = Math.Cos(dec.Radians) * h;
+
+            return new Triplet(x, y, z);
+        }
+
+        public static Tuple<Angle, Angle> FromCartesian(Triplet vector)
+        {
+            var az = Math.Atan2(vector.X, vector.Y);
+            var alt = Math.Asin(vector.Z / vector.Magnitude);
+
+            return new Tuple<Angle, Angle>(Angle.FromRadians(alt), Angle.FromRadians(az));
+        }
+    }
+
     public static class Coordinates
     {
         public static Tuple<double, double, double> ToSpherical(Triplet cartesian)

@@ -13,18 +13,18 @@ namespace Orbitools
     /// </summary>
     public class GeocentricParallaxEffect
     {
-        public double GeocentricDistanceToObserver { get; private set; }
+        public double GeocentricDistanceToObserver { get; set; }
 
-        public GeocentricParallaxEffect(double geocentricDistanceToObserver)
-        {
-            GeocentricDistanceToObserver = geocentricDistanceToObserver;
-        }
+        //public GeocentricParallaxEffect(double geocentricDistanceToObserver)
+        //{
+        //    GeocentricDistanceToObserver = geocentricDistanceToObserver;
+        //}
 
-        public static GeocentricParallaxEffect Create(Angle latitude, Angle longitude, double amsl)
-        {
-            var radius = Spheroid.WGS84.FromLatLon(latitude.Radians, longitude.Radians).Magnitude;
-            return new GeocentricParallaxEffect(radius + amsl);
-        }
+        //public static GeocentricParallaxEffect Create(Angle latitude, Angle longitude, double amsl)
+        //{
+        //    var radius = Spheroid.WGS84.FromLatLon(latitude.Radians, longitude.Radians).Magnitude;
+        //    return new GeocentricParallaxEffect(radius + amsl);
+        //}
 
         /// <summary>
         /// I decided to write my own parallax adjustment instead of taking it from the Practical Astronomy book.
@@ -54,6 +54,24 @@ namespace Orbitools
             var alt = Math.Asin(z / r);
 
             return new HorizontalCoordinates(Angle.FromRadians(alt), vector.Az/*Angle.FromRadians(az)*/);
+        }
+
+        [Obsolete("Untested")]
+        public EquatorialCoordinates Distort(EquatorialCoordinates vector, double geocentricDistance)
+        {
+            var z = Math.Sin(vector.Dec.Radians) * geocentricDistance;
+            var h = Math.Cos(vector.Dec.Radians) * geocentricDistance;
+            var x = Math.Sin(vector.RA.Radians) * h;
+            var y = Math.Cos(vector.RA.Radians) * h;
+
+            z -= GeocentricDistanceToObserver;
+
+            var r = Math.Sqrt(x * x + y * y + z * z);
+
+            var dec = Math.Atan2(x, y);
+            var ra = Math.Asin(z / r);
+
+            return new EquatorialCoordinates(Angle.FromRadians(ra), Angle.FromRadians(dec));
         }
     }
 }
