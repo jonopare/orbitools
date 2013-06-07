@@ -7,51 +7,37 @@ namespace Orbitools
 {
     public class EarthBasedObserver
     {
-        public Angle Latitude { get; private set; }
-        public Angle Longitude { get; private set; }
+        //public Angle Latitude { get; set; }
+        //public Angle Longitude { get; set; }
 
-        public SiderealClock Clock { get; private set; }
-
+        //public SiderealClock Clock { get; set; }
         public GeocentricParallaxEffect GeocentricParallax { get; set; }
         public AtmosphericRefractionEffect AtmosphericRefraction { get; set; }
 
-        public EarthBasedObserver(Angle latitude, Angle longitude)
+        public EarthBasedObserver()
         {
-            Latitude = latitude;
-            Longitude = longitude;
-
-            Clock = new SiderealClock(Longitude);
-
-            GeocentricParallax = GeocentricParallaxEffect.Create(latitude, longitude, 100);
-            AtmosphericRefraction = new AtmosphericRefractionEffect { BarometricPressureMillibars = 1024, TempDegreesC = 16 };
+            
+            //GeocentricParallax = GeocentricParallaxEffect.Create(latitude, longitude, 100);
+            //AtmosphericRefraction = new AtmosphericRefractionEffect { BarometricPressureMillibars = 1024, TempDegreesC = 16 };
         }
 
-        public HorizontalCoordinates ToAltAz(DateTime utc, Angle rightAscension, Angle declination, double distance)
+        public HorizontalCoordinates ToAltAz(HorizontalCoordinates position, double distance)
         {
-            var lst = Clock.ToSiderealTime(utc);
-            var hourAngle = (Angle.FromHours(lst.TotalHours) - rightAscension).Constrain();       
-
-            var geocentric = EarthBasedObserver.ToAltAz(hourAngle, declination, Latitude);
-            var parallaxAdjusted = GeocentricParallax.Distort(geocentric, distance);
-            var refractionAdjusted = AtmosphericRefraction.Distort(parallaxAdjusted);
-            return refractionAdjusted;
-        }
-
-        public static HorizontalCoordinates ToAltAz(Angle ha, Angle dec, Angle lat)
-        {
-            double sinAlt = Math.Sin(dec.Radians) * Math.Sin(lat.Radians) + Math.Cos(dec.Radians) * Math.Cos(lat.Radians) * Math.Cos(ha.Radians);
-            double alt = Math.Asin(sinAlt);
-            double cosAz = (Math.Sin(dec.Radians) - Math.Sin(alt) * Math.Sin(lat.Radians)) / (Math.Cos(alt) * Math.Cos(lat.Radians));
-            double az = Math.Acos(cosAz);
-
-            //If sin(HA) is negative, then AZ = A, otherwise AZ = 360 - A
-            if (Math.Sin(ha.Radians) >= 0)
+            if (GeocentricParallax != null)
             {
-                az = Angle.TwoPi - az;
+                position = GeocentricParallax.Distort(position, distance);
             }
-
-            return new HorizontalCoordinates(Angle.FromRadians(alt), Angle.FromRadians(az));
+            if (AtmosphericRefraction != null)
+            {
+                position = AtmosphericRefraction.Distort(position);
+            }
+            return position;
         }
+
+        //public static HorizontalCoordinates ToAltAz(EquatorialCoordinates vector, Angle lat)
+        //{
+            
+        //}
 
     }
 }

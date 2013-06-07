@@ -5,20 +5,21 @@ using System.Text;
 
 namespace Orbitools
 {
-    public class AtmosphericRefractionEffect //: IDistortionEffect
+    public class AtmosphericRefractionEffect
     {
         public double TempDegreesC { get; set; }
         public double BarometricPressureMillibars { get; set; }
-        public Angle ThresholdAlt { get; set; }
+
+        private Angle thresholdHorizontalAltitude;
 
         public AtmosphericRefractionEffect()
         {
-            ThresholdAlt = Angle.FromDegrees(15);
+            thresholdHorizontalAltitude = Angle.FromDegrees(15);
         }
 
         public HorizontalCoordinates Distort(HorizontalCoordinates vector)
         {
-            return vector.Alt > ThresholdAlt ? UpperAltitudeDistortion(vector) : LowerAltitudeDistortion(vector);
+            return vector.Alt > thresholdHorizontalAltitude ? UpperAltitudeDistortion(vector) : LowerAltitudeDistortion(vector);
         }
 
         /// <summary>
@@ -29,11 +30,16 @@ namespace Orbitools
         /// <returns></returns>
         internal HorizontalCoordinates UpperAltitudeDistortion(HorizontalCoordinates vector)
         {
-            var z = Angle.PiOverTwo - vector.Alt.Radians;
-            var R = 0.00452 * BarometricPressureMillibars * Math.Tan(z) / (273 + TempDegreesC);
+            var z = Angle.PiOverTwo - vector.Alt;
+            var R = 0.00452 * BarometricPressureMillibars * Math.Tan(z.Radians) / (273 + TempDegreesC);
             return new HorizontalCoordinates(vector.Alt + Angle.FromDegrees(R), vector.Az);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns></returns>
         internal HorizontalCoordinates LowerAltitudeDistortion(HorizontalCoordinates vector)
         {
             var a = vector.Alt.Degrees; // strictly, it's the apparent altitude as measured through the atmosphere

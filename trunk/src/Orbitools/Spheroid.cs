@@ -53,17 +53,17 @@ namespace Orbitools
             Flattening = flattening;
         }
 
-        public double Radius(double latitude)
+        public double Radius(Angle latitude)
         {
-            var numerator = Math.Pow(Math.Pow(TransverseRadius, 2) * Math.Cos(latitude), 2) + Math.Pow(Math.Pow(ConjugateRadius, 2) * Math.Sin(latitude), 2);
-            var denominator = Math.Pow(TransverseRadius * Math.Cos(latitude), 2) + Math.Pow(ConjugateRadius * Math.Sin(latitude), 2);
+            var numerator = Math.Pow(Math.Pow(TransverseRadius, 2) * Math.Cos(latitude.Radians), 2) + Math.Pow(Math.Pow(ConjugateRadius, 2) * Math.Sin(latitude.Radians), 2);
+            var denominator = Math.Pow(TransverseRadius * Math.Cos(latitude.Radians), 2) + Math.Pow(ConjugateRadius * Math.Sin(latitude.Radians), 2);
             return Math.Sqrt(numerator / denominator);
         }
 
-        public Triplet FromLatLon(double latitude, double longitude)
+        public Triplet FromLatLon(Angle latitude, Angle longitude)
         {
             var r = Radius(latitude);
-            return new Triplet(r * Math.Cos(latitude) * Math.Cos(longitude), r * Math.Cos(latitude) * Math.Sin(longitude), r * Math.Sin(latitude));
+            return new Triplet(r * Math.Cos(latitude.Radians) * Math.Cos(longitude.Radians), r * Math.Cos(latitude.Radians) * Math.Sin(longitude.Radians), r * Math.Sin(latitude.Radians));
         }
 
         public void FromXYZ(Triplet xyz)
@@ -76,21 +76,21 @@ namespace Orbitools
         {
             var rads = Enumerable.Range(0, divisions / 4).Select(d => 2 * Math.PI * d / divisions).ToArray();
 
-            yield return FromLatLon(Math.PI / 2, 0); // north pole
+            yield return FromLatLon(Angle.PiOverTwo, Angle.FromRadians(0)); // north pole
 
             for (int lat = rads.Length - 1; lat > 0 - rads.Length; lat--)
             {
-                var radLat = Math.Sign(lat) * rads[Math.Abs(lat)];
+                var radLat = Angle.FromRadians(Math.Sign(lat) * rads[Math.Abs(lat)]);
                 for (int q = 0; q < 4; q++)
                 {
                     for (int lon = 0; lon < rads.Length; lon++)
                     {
-                        yield return FromLatLon(radLat, rads[lon] + q * Math.PI / 2);
+                        yield return FromLatLon(radLat, Angle.FromRadians(rads[lon] + q * Math.PI / 2));
                     }
                 }
             }
 
-            yield return FromLatLon(0 - Math.PI / 2, 0); // south pole
+            yield return FromLatLon(-Angle.PiOverTwo, Angle.Zero); // south pole
         }
     }
 }

@@ -11,41 +11,48 @@ namespace Orbitools
     /// </summary>
     public struct Angle
     {
-        public readonly static double TwoPi = Math.PI * 2;
-        public readonly static double PiOverTwo = Math.PI / 2;
+        public readonly static Angle TwoPi = Angle.FromRadians(Math.PI * 2);
+        public readonly static Angle PiOverTwo = Angle.FromRadians(Math.PI / 2);
+        public readonly static Angle PiOverFour = Angle.FromRadians(Math.PI / 4);
+        public readonly static Angle Zero = new Angle();
 
-        public double Fraction;
+        private double value;
 
-        public Angle(double fraction)
+        private Angle(double radians)
         {
-            Fraction = fraction;
+            value = radians;
         }
 
-        public Angle(double numerator, double denominator)
+        public static Angle FromFraction(double fraction)
         {
-            Fraction = numerator / denominator;
+            return new Angle(TwoPi.Radians * fraction);
+        }
+
+        public static Angle FromFraction(double numerator, double denominator)
+        {
+            return Angle.FromFraction(numerator / denominator);
         }
 
         public static Angle FromDegrees(double value)
         {
-            return new Angle(value, 360);
+            return Angle.FromFraction(value, 360);
         }
 
         public static Angle FromRadians(double value)
         {
-            return new Angle(value, TwoPi);
+            return new Angle(value);
         }
 
         public static Angle FromHours(double value)
         {
-            return new Angle(value, 24);
+            return Angle.FromFraction(value, 24);
         }
 
         public double Degrees
         {
             get
             {
-                return Fraction * 360;
+                return Radians * 180 / Math.PI;
             }
         }
 
@@ -53,7 +60,7 @@ namespace Orbitools
         {
             get
             {
-                return Fraction * Angle.TwoPi;
+                return value;
             }
         }
 
@@ -61,7 +68,15 @@ namespace Orbitools
         {
             get
             {
-                return Fraction * 24;
+                return Radians * 12 / Math.PI;
+            }
+        }
+
+        public double Fraction
+        {
+            get
+            {
+                return Radians / 2 / Math.PI;
             }
         }
 
@@ -74,11 +89,11 @@ namespace Orbitools
             double minInclusive = maxExclusive - 1; 
             if (Fraction < minInclusive)
             {
-                return new Angle(1 + (Fraction % 1));
+                return Angle.FromFraction(1 + (Fraction % 1));
             }
             else if (Fraction >= maxExclusive)
             {
-                return new Angle(Fraction % 1);
+                return Angle.FromFraction(Fraction % 1);
             }
             else
             {
@@ -93,22 +108,22 @@ namespace Orbitools
 
         public static bool operator <(Angle a, Angle b)
         {
-            return a.Fraction < b.Fraction;
+            return a.Radians < b.Radians;
         }
 
         public static bool operator >(Angle a, Angle b)
         {
-            return a.Fraction > b.Fraction;
+            return a.Radians > b.Radians;
         }
 
         public static bool operator <=(Angle a, Angle b)
         {
-            return a.Fraction <= b.Fraction;
+            return a.Radians <= b.Radians;
         }
 
         public static bool operator >=(Angle a, Angle b)
         {
-            return a.Fraction >= b.Fraction;
+            return a.Radians >= b.Radians;
         }
 
         public static bool operator !=(Angle a, Angle b)
@@ -129,22 +144,32 @@ namespace Orbitools
 
         public bool Equals(Angle other)
         {
-            return Fraction == other.Fraction;
+            return Radians == other.Radians;
         }
 
         public override int GetHashCode()
         {
-            return Fraction.GetHashCode();
+            return Radians.GetHashCode();
         }
 
         public static Angle operator +(Angle a, Angle b)
         {
-            return new Angle(a.Fraction + b.Fraction);
+            return new Angle(a.Radians + b.Radians);
         }
 
         public static Angle operator -(Angle a, Angle b)
         {
-            return new Angle(a.Fraction - b.Fraction);
+            return new Angle(a.Radians - b.Radians);
+        }
+
+        public static Angle operator -(Angle a)
+        {
+            return new Angle(0 - a.Radians);
+        }
+
+        public static Angle operator *(Angle angle, double scale)
+        {
+            return new Angle(angle.Radians * scale);
         }
     }
 }

@@ -46,13 +46,47 @@ namespace Orbitools
             return Position(new Triplet(x, y, z));
         }
 
-        public BodyBuilder Rotate(double clockwise)
+        /// <summary>
+        /// Rotates clockwise around the Z axis
+        /// </summary>
+        /// <param name="clockwise"></param>
+        /// <returns></returns>
+        public BodyBuilder RotateZ(Angle clockwise)
         {
-            var s = Math.Sin(clockwise);
-            var c = Math.Cos(clockwise);
+            var s = Math.Sin(clockwise.Radians);
+            var c = Math.Cos(clockwise.Radians);
             return Position(position.X * c - position.Y * s, position.X * s + position.Y * c, position.Z)
                 .Direction(direction.X * c - direction.Y * s, direction.X * s + direction.Y * c, direction.Z);
         }
+
+        /// <summary>
+        /// Rotates clockwise around the Y axis
+        /// </summary>
+        /// <param name="clockwise"></param>
+        /// <returns></returns>
+        public BodyBuilder RotateY(Angle clockwise)
+        {
+            var s = Math.Sin(clockwise.Radians);
+            var c = Math.Cos(clockwise.Radians);
+            return Position(position.X * c - position.Z * s, position.Y, position.X * s + position.Z * c)
+                .Direction(direction.X * c - direction.Z * s, position.Y, direction.X * s + direction.Z * c);
+        }
+
+        //public BodyBuilder RotateY(Angle clockwise)
+        //{
+        //    var s = Math.Sin(clockwise.Radians);
+        //    var c = Math.Cos(clockwise.Radians);
+        //    return Position(position.X * s + position.Z * c, position.Y, position.X * c - position.Z * s)
+        //        .Direction(direction.X * s + direction.Z * c, direction.Y, direction.X * c - direction.Z * s);
+        //}
+
+        //public BodyBuilder RotateX(Angle clockwise)
+        //{
+        //    var s = Math.Sin(clockwise.Radians);
+        //    var c = Math.Cos(clockwise.Radians);
+        //    return Position(position.X, position.Y * c - position.Z * s, position.Y * s + position.Z * c)
+        //        .Direction(direction.X, direction.Y * c - direction.Z * s, direction.Y * s + direction.Z * c);
+        //}
 
         public Body ToBody()
         {

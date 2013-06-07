@@ -55,8 +55,9 @@
     <Compile Include="BodyBuilder.cs" />
     <Compile Include="BodyEventArgs.cs" />
     <Compile Include="Coordinates.cs" />
-    <Compile Include="DistortionEffect.cs" />
     <Compile Include="EarthBasedObserver.cs" />
+    <Compile Include="EquatorialCoordinates.cs" />
+    <Compile Include="GeographicCoordinates.cs" />
     <Compile Include="HorizontalCoordinates.cs" />
     <Compile Include="NBodyModel.cs" />
     <Compile Include="GeocentricParallaxEffect.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="SiderealClock.cs" />
     <Compile Include="SolarSystem.cs" />
     <Compile Include="Spheroid.cs" />
+    <Compile Include="Sundial.cs" />
     <Compile Include="Triplet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
