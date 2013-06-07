@@ -73,5 +73,28 @@ namespace Orbitools
             Assert.IsTrue(new Triplet(0, -2, 1).IsEqualWithinTolerance(actual, 1e-6));
         }
         #endregion
+
+        #region Rotate Y
+        [TestMethod]
+        public void RotateY_OneQuarter_FromFirstDiagonal()
+        {
+            var actual = BodyBuilder.RotateY(new Triplet(3, 0, 4), Angle.PiOverTwo);
+            Assert.IsTrue(new Triplet(4, 0, -3).IsEqualWithinTolerance(actual, 1e-6));
+        }
+
+        [TestMethod]
+        public void RotateY_TwoQuarters_FromFirstDiagonal()
+        {
+            var actual = BodyBuilder.RotateY(new Triplet(3, 0, 4), Angle.Pi);
+            Assert.IsTrue(new Triplet(-3, 0, -4).IsEqualWithinTolerance(actual, 1e-6));
+        }
+
+        [TestMethod]
+        public void RotateY_ThreeQuarters_FromFirstDiagonal()
+        {
+            var actual = BodyBuilder.RotateY(new Triplet(3, 0, 4), Angle.Pi + Angle.PiOverTwo);
+            Assert.IsTrue(new Triplet(-4, 0, 3).IsEqualWithinTolerance(actual, 1e-6));
+        }
+        #endregion
     }
 }
