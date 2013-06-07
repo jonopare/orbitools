@@ -12,6 +12,8 @@ namespace Orbitools
         private double speed;
         private double mass;
 
+
+
         public BodyBuilder Mass(double mass)
         {
             this.mass = mass;
@@ -46,6 +48,20 @@ namespace Orbitools
             return Position(new Triplet(x, y, z));
         }
 
+        public static Triplet RotateZ(Triplet triplet, Angle clockwise)
+        {
+            var s = Math.Sin(clockwise.Radians);
+            var c = Math.Cos(clockwise.Radians);
+            return new Triplet(triplet.X * c + triplet.Y * s, triplet.Y * c - triplet.X * s, triplet.Z);
+        }
+
+        public static Triplet RotateX(Triplet triplet, Angle clockwise)
+        {
+            var s = Math.Sin(clockwise.Radians);
+            var c = Math.Cos(clockwise.Radians);
+            return new Triplet(triplet.X, triplet.Z * s + triplet.Y * c, triplet.Z * c - triplet.Y * s);
+        }
+
         /// <summary>
         /// Rotates clockwise around the Z axis
         /// </summary>
@@ -53,10 +69,7 @@ namespace Orbitools
         /// <returns></returns>
         public BodyBuilder RotateZ(Angle clockwise)
         {
-            var s = Math.Sin(clockwise.Radians);
-            var c = Math.Cos(clockwise.Radians);
-            return Position(position.X * c - position.Y * s, position.X * s + position.Y * c, position.Z)
-                .Direction(direction.X * c - direction.Y * s, direction.X * s + direction.Y * c, direction.Z);
+            return Position(RotateZ(position, clockwise)).Direction(RotateZ(direction, clockwise));
         }
 
         /// <summary>
@@ -80,13 +93,10 @@ namespace Orbitools
         //        .Direction(direction.X * s + direction.Z * c, direction.Y, direction.X * c - direction.Z * s);
         //}
 
-        //public BodyBuilder RotateX(Angle clockwise)
-        //{
-        //    var s = Math.Sin(clockwise.Radians);
-        //    var c = Math.Cos(clockwise.Radians);
-        //    return Position(position.X, position.Y * c - position.Z * s, position.Y * s + position.Z * c)
-        //        .Direction(direction.X, direction.Y * c - direction.Z * s, direction.Y * s + direction.Z * c);
-        //}
+        public BodyBuilder RotateX(Angle clockwise)
+        {
+            return Position(RotateX(position, clockwise)).Direction(RotateX(direction, clockwise));
+        }
 
         public Body ToBody()
         {

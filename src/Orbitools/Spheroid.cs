@@ -68,7 +68,7 @@ namespace Orbitools
 
         public void FromXYZ(Triplet xyz)
         {
-            var lat = Math.Asin(xyz.Z / xyz.Magnitude);
+            var lat = Math.Asin(xyz.Z / xyz.Length);
             var lon = Math.Atan2(xyz.Y, xyz.X);
         }
 

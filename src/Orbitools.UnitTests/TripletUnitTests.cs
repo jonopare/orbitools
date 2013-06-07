@@ -14,56 +14,56 @@ namespace Orbitools
         public void Length_Origin_IsZero()
         {
             var t = new Triplet(0, 0, 0);
-            Assert.AreEqual(0, t.Magnitude);
+            Assert.AreEqual(0, t.Length);
         }
 
         [TestMethod]
         public void Length_UnitX_IsOne()
         {
             var t = new Triplet(1, 0, 0);
-            Assert.AreEqual(1, t.Magnitude);
+            Assert.AreEqual(1, t.Length);
         }
 
         [TestMethod]
         public void Length_UnitY_IsOne()
         {
             var t = new Triplet(0, 1, 0);
-            Assert.AreEqual(1, t.Magnitude);
+            Assert.AreEqual(1, t.Length);
         }
 
         [TestMethod]
         public void Length_UnitZ_IsOne()
         {
             var t = new Triplet(0, 0, 1);
-            Assert.AreEqual(1, t.Magnitude);
+            Assert.AreEqual(1, t.Length);
         }
 
         [TestMethod]
         public void Length_UnitXY_IsRoot2()
         {
             var t = new Triplet(1, 1, 0);
-            Assert.AreEqual(Math.Sqrt(2), t.Magnitude);
+            Assert.AreEqual(Math.Sqrt(2), t.Length);
         }
 
         [TestMethod]
         public void Length_UnitXZ_IsRoot2()
         {
             var t = new Triplet(1, 0, 1);
-            Assert.AreEqual(Math.Sqrt(2), t.Magnitude);
+            Assert.AreEqual(Math.Sqrt(2), t.Length);
         }
 
         [TestMethod]
         public void Length_UnitYZ_IsRoot2()
         {
             var t = new Triplet(0, 1, 1);
-            Assert.AreEqual(Math.Sqrt(2), t.Magnitude);
+            Assert.AreEqual(Math.Sqrt(2), t.Length);
         }
 
         [TestMethod]
         public void Length_UnitXYZ_IsOnePointSevenThree()
         {
             var t = new Triplet(1, 1, 1);
-            Assert.AreEqual(1.7320508075688772, t.Magnitude, 1e-15);
+            Assert.AreEqual(1.7320508075688772, t.Length, 1e-15);
         }
         #endregion Length
 
@@ -72,7 +72,7 @@ namespace Orbitools
         public void Unit_RandomXYZ_LengthIsOne()
         {
             var t = new Triplet(200, 2, 20).Unit;
-            Assert.AreEqual(1d, t.Magnitude, 1e-15);
+            Assert.AreEqual(1d, t.Length, 1e-15);
         }
         #endregion
 

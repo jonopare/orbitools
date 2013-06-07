@@ -14,7 +14,7 @@ namespace Orbitools
                 var result = new NBodyModel()
                 {
                     new BodyBuilder().Mass(1.9891E+30).ToBody("Sun"),
-                    new BodyBuilder().Mass(5.9736E+24).Position(147098291000,0,0).Speed(30286.6658479136).Direction(0,-1,0).RotateZ(Angle.FromDegrees(90)).RotateY(Angle.FromDegrees(23.4)).ToBody("Earth"),
+                    new BodyBuilder().Mass(5.9736E+24).Position(147098291000,0,0).Speed(30286.6658479136).Direction(0,-1,0).RotateZ(Angle.FromDegrees(90)).RotateX(Angle.FromDegrees(23.4)).ToBody("Earth"),
                 };
                 return result;
             }
@@ -70,7 +70,7 @@ namespace Orbitools
                 };
 
                 var earth = result.Single(b => b.Name == "Earth");
-                result.Add(new BodyBuilder().Mass(7.34767309E+22).Position(earth.Position.X + 3.844e8, earth.Position.Y, earth.Position.Z).Speed(earth.Velocity.Magnitude + 1023.16025670753).Direction(0, 1, 0).ToBody("Moon"));
+                result.Add(new BodyBuilder().Mass(7.34767309E+22).Position(earth.Position.X + 3.844e8, earth.Position.Y, earth.Position.Z).Speed(earth.Velocity.Length + 1023.16025670753).Direction(0, 1, 0).ToBody("Moon"));
 
                 return result;
             }

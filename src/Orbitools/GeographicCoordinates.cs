@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Orbitools
 {
+    [DebuggerDisplay("Lat={Latitude} Lon={Longitude}")]
     public struct GeographicCoordinates
     {
         public Angle Latitude;
