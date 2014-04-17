@@ -9,10 +9,12 @@ namespace Orbitools
     {
         public static Triplet ToCartesian(Angle ra, Angle dec, double geocentricDistance)
         {
-            var z = Math.Sin(ra.Radians) * geocentricDistance;
-            var h = Math.Cos(ra.Radians) * geocentricDistance;
-            var x = Math.Sin(dec.Radians) * h;
-            var y = Math.Cos(dec.Radians) * h;
+            // according to wikipedia
+            var inc = (Angle.PiOverTwo - dec);
+            var z = Math.Cos(inc.Radians) * geocentricDistance;
+            var h = Math.Sin(inc.Radians) * geocentricDistance;
+            var x = Math.Sin(ra.Radians) * h;
+            var y = Math.Cos(ra.Radians) * h;
 
             return new Triplet(x, y, z);
         }

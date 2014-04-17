@@ -9,6 +9,16 @@ namespace Orbitools
     [TestClass]
     public class AngleUnitTests
     {
+        public static void AssertAreEqual(Angle a, Angle b)
+        {
+            Assert.AreEqual(a.Radians, b.Radians);
+        }
+
+        public static void AssertAreEqual(Angle a, Angle b, Angle tolerance)
+        {
+            Assert.AreEqual(a.Radians, b.Radians, tolerance.Radians);
+        }
+
         [TestMethod]
         public void TwoPi_ReadonlyStatic_HasCorrectValue()
         {
