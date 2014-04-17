@@ -61,6 +61,7 @@
     <Compile Include="HorizontalCoordinates.cs" />
     <Compile Include="NBodyModel.cs" />
     <Compile Include="GeocentricParallaxEffect.cs" />
+    <Compile Include="ParabolicReflector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiderealClock.cs" />
     <Compile Include="SolarSystem.cs" />

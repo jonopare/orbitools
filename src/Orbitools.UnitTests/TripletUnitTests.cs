@@ -9,6 +9,20 @@ namespace Orbitools
     [TestClass]
     public class TripletUnitTests
     {
+        public static void AssertAreEqual(Triplet expected, Triplet actual)
+        {
+            Assert.AreEqual(expected.X, actual.X);
+            Assert.AreEqual(expected.Y, actual.Y);
+            Assert.AreEqual(expected.Z, actual.Z);
+        }
+
+        public static void AssertAreEqual(Triplet expected, Triplet actual, double tolerance)
+        {
+            Assert.AreEqual(expected.X, actual.X, tolerance);
+            Assert.AreEqual(expected.Y, actual.Y, tolerance);
+            Assert.AreEqual(expected.Z, actual.Z, tolerance);
+        }
+
         #region Length
         [TestMethod]
         public void Length_Origin_IsZero()
