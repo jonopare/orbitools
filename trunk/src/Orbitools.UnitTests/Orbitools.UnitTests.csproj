@@ -52,6 +52,7 @@
     <Compile Include="BodyBuilderUnitTests.cs" />
     <Compile Include="BodyUnitTests.cs" />
     <Compile Include="GeocentricParallaxEffectUnitTests.cs" />
+    <Compile Include="ParabolicReflectorUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SundialUnitTests.cs" />
     <Compile Include="TripletExtensions.cs" />

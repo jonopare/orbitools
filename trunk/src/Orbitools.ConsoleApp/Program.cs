@@ -27,8 +27,8 @@ namespace Orbitools
             
             var orbit = iss.Gravity(earth);
                         
-            var surfaceAcceleration = surface.Magnitude / human.Mass;
-            var orbitAcceleration = orbit.Magnitude / iss.Mass;
+            var surfaceAcceleration = surface.Length / human.Mass;
+            var orbitAcceleration = orbit.Length / iss.Mass;
 
             var maxSamples = 32000;
             var period = 92 * 60 + 50;

@@ -73,6 +73,23 @@ namespace Orbitools
             }
         }
 
+        public double Dot(Triplet other)
+        {
+            return X * other.X + Y * other.Y + Z * other.Z;
+        }
+
+        public Triplet Cross(Triplet other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Triplet RotateZ(Angle clockwise)
+        {
+            var s = Math.Sin(clockwise.Radians);
+            var c = Math.Cos(clockwise.Radians);
+            return new Triplet(X * c + Y * s, Y * c - X * s, Z);
+        }
+
         public override string ToString()
         {
             return string.Format("X={0} Y={1} Z={2} Len={3}", X, Y, Z, Length);
