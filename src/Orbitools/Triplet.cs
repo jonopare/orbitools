@@ -80,7 +80,15 @@ namespace Orbitools
 
         public Triplet Cross(Triplet other)
         {
-            throw new NotImplementedException();
+            return new Triplet(
+                Y * other.Z - other.Y * Z,
+                Z * other.X - other.Z * X,
+                X * other.Y - other.X * Y);
+        }
+
+        public Angle AngularDistance(Triplet other)
+        {
+            return Angle.FromRadians(Math.Acos(Dot(other) / Length / other.Length));
         }
 
         public Triplet RotateZ(Angle clockwise)

@@ -122,5 +122,25 @@ namespace Orbitools
             Assert.AreEqual(new Triplet(0, 0, 0), t);
         }
         #endregion
+
+        #region Dot
+        [TestMethod]
+        public void Dot_()
+        {
+            var a = new Triplet(1, 2, 3);
+            var b = new Triplet(10, 100, 1000);
+            Assert.AreEqual(3210, a.Dot(b));
+        }
+        #endregion
+
+        #region Cross
+        [TestMethod]
+        public void Cross_()
+        {
+            var a = new Triplet(1, 2, 3);
+            var b = new Triplet(10, 100, 1000);
+            AssertAreEqual(new Triplet(1700, -970, 80), a.Cross(b));
+        }
+        #endregion
     }
 }

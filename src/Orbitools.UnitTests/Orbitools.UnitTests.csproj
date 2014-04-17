@@ -51,6 +51,7 @@
     <Compile Include="AngleUnitTests.cs" />
     <Compile Include="BodyBuilderUnitTests.cs" />
     <Compile Include="BodyUnitTests.cs" />
+    <Compile Include="CoordinateUnitTests.cs" />
     <Compile Include="GeocentricParallaxEffectUnitTests.cs" />
     <Compile Include="ParabolicReflectorUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

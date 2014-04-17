@@ -39,6 +39,11 @@ namespace Orbitools
             return Angle.FromFraction(value, 360);
         }
 
+        public static Angle FromDegrees(double degrees, double minutes, double seconds)
+        {
+            return Angle.FromFraction(degrees + minutes / 60 + seconds / 3600, 360);
+        }
+
         public static Angle FromRadians(double value)
         {
             return new Angle(value);
@@ -47,6 +52,11 @@ namespace Orbitools
         public static Angle FromHours(double value)
         {
             return Angle.FromFraction(value, 24);
+        }
+
+        public static Angle FromHours(double hours, double minutes, double seconds)
+        {
+            return Angle.FromFraction(hours + minutes / 60 + seconds / 3600, 24);
         }
 
         public double Degrees
@@ -171,6 +181,16 @@ namespace Orbitools
         public static Angle operator *(Angle angle, double scale)
         {
             return new Angle(angle.Radians * scale);
+        }
+
+        public static Angle operator *(double scale, Angle angle)
+        {
+            return Angle.FromRadians(scale * angle.Radians);
+        }
+
+        public static Angle operator /(Angle angle, double scale)
+        {
+            return Angle.FromRadians(angle.Radians / scale);
         }
     }
 }
