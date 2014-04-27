@@ -61,7 +61,7 @@ namespace Orbitools
             Assert.AreEqual(1, Angle.FromDegrees(361).Constrain().Degrees, 1e-6);
         }
 
-[TestMethod]
+        [TestMethod]
         public void Constrain_NegativeOneQuarter_IsPositiveThreeQuarters()
         {
             var original = Angle.FromFraction(-1, 4);
@@ -195,6 +195,22 @@ namespace Orbitools
         public void Add_PositiveNegative_BiggerAngle()
         {
             Assert.AreEqual(3, (Angle.FromRadians(2) - Angle.FromRadians(-1)).Radians, 1e-6);
+        }
+
+        [TestMethod]
+        public void Ctor_NegativeHour_NegativeHourMinuteSecond()
+        {
+            var expected = Angle.FromHours(-1.23);
+            var actual = Angle.FromHours(-1, 13, 48);
+            Assert.AreEqual(0, (actual - expected).Radians, 1e-6);
+        }
+
+        [TestMethod]
+        public void Ctor_NegativeDegree_NegativeDegreeMinuteSecond()
+        {
+            var expected = Angle.FromDegrees(-1.23);
+            var actual = Angle.FromDegrees(-1, 13, 48);
+            Assert.AreEqual(0, (actual - expected).Radians, 1e-6);
         }
     }
 }
