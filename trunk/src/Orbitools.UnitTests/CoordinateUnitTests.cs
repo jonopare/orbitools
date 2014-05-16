@@ -28,5 +28,15 @@ namespace Orbitools
             var d = xyz.AngularDistance(new Triplet(0, 0, 1));
             AngleUnitTests.AssertAreEqual(Angle.PiOverTwo - dec, d, Angle.FromDegrees(10e-9)); 
         }
+
+        [TestMethod]
+        public void Spherical_ToRightHanded_Polaris()
+        {
+            var ra = Angle.FromDegrees(2, 31, 49.09); 
+            var dec = Angle.FromDegrees(89, 15, 50.8);
+            var xyz = CartesianCoordinates.ToRightHanded(ra, dec, 1);
+            var d = xyz.AngularDistance(new Triplet(0, 1, 0));
+            AngleUnitTests.AssertAreEqual(Angle.PiOverTwo - dec, d, Angle.FromDegrees(10e-9));
+        }
     }
 }

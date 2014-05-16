@@ -19,6 +19,18 @@ namespace Orbitools
             return new Triplet(x, y, z);
         }
 
+        public static Triplet ToRightHanded(Angle ra, Angle dec, double geocentricDistance)
+        {
+            // according to wikipedia
+            var inc = (Angle.PiOverTwo - dec);
+            var z = Math.Cos(inc.Radians) * geocentricDistance;
+            var h = Math.Sin(inc.Radians) * geocentricDistance;
+            var x = Math.Sin(ra.Radians) * h;
+            var y = Math.Cos(ra.Radians) * h;
+
+            return new Triplet(x, z, y);
+        }
+
         public static Tuple<Angle, Angle> FromCartesian(Triplet vector)
         {
             var az = Math.Atan2(vector.X, vector.Y);
