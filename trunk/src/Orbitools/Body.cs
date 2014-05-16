@@ -34,7 +34,7 @@ namespace Orbitools
             {
                 return new Triplet();
             }
-            var f = G * (this.Mass * other.Mass) / Math.Pow(d.Length, 2);
+            var f = G * (this.Mass * other.Mass) / d.LengthSquared;
             return f * d.Unit;
         }
 
