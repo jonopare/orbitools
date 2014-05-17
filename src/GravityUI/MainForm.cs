@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Gravity;
 using System.Drawing.Drawing2D;
+using System.Threading;
 
 namespace GravityUI
 {
@@ -44,7 +45,9 @@ namespace GravityUI
             lastTick = DateTime.UtcNow;
             timeScale = 15 * 60 * 60 * 24; // 1s -> 1d
 
-            gameTimer.Interval = 5;
+            ThreadPool.QueueUserWorkItem(UpdateLoop);
+
+            gameTimer.Interval = 33;
             gameTimer.Enabled = true;
         }
 
@@ -73,25 +76,24 @@ namespace GravityUI
 
         }
 
-        private void gameTimer_Tick(object sender, EventArgs e)
+        private void UpdateLoop(object state)
         {
-            DateTime now = DateTime.UtcNow;
-            var elapsed = (now - lastTick);
-            lastTick = now;
-            if (elapsed == TimeSpan.Zero)
+            var running = true;
+            while (running)
             {
-                return; // skip this iteration
-            }
 
-            Text = string.Format("{0:P} duty cycle", elapsed.TotalMilliseconds / gameTimer.Interval);
+                DateTime now = DateTime.UtcNow;
+                var elapsed = (now - lastTick);
+                lastTick = now;
+                if (elapsed == TimeSpan.Zero)
+                {
+                    continue; // skip this iteration
+                }
 
-            var bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            using (var gfx = Graphics.FromImage(bitmap))
-            {
-                gfx.SmoothingMode = SmoothingMode.AntiAlias;
+                //Text = string.Format("{0:P} duty cycle", elapsed.TotalMilliseconds / gameTimer.Interval);
 
                 var fs = Enumerable.Range(0, bodies.Length).Select(i => Vector3.Zero).ToArray();
-                
+
                 for (int i = 0; i < bodies.Length; i++)
                 {
                     for (int j = i + 1; j < bodies.Length; j++)
@@ -106,7 +108,15 @@ namespace GravityUI
                 {
                     bodies[k].Apply(fs[k], elapsed.TotalSeconds * timeScale);
                 }
+            }
+        }
 
+        private void gameTimer_Tick(object sender, EventArgs e)
+        {
+            var bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
+            using (var gfx = Graphics.FromImage(bitmap))
+            {
+                gfx.SmoothingMode = SmoothingMode.AntiAlias;
                 Draw(gfx, Pens.Yellow, SolarSystem.Sun, 3);
                 Draw(gfx, Pens.Orange, SolarSystem.Mercury, 1);
                 Draw(gfx, Pens.Green, SolarSystem.Venus, 1);
