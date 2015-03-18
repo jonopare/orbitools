@@ -1,0 +1,1 @@
+I had the idea to create this suite of components when I tried to take some land based photographs of the orbiting International Space Station. The more I learned, the more I found that I didn't already know, but I always found the learning experience to be captivating. This project's goal is to enable users to visualise and predict orbits of satellites and planets.
