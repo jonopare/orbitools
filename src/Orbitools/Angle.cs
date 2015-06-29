@@ -9,7 +9,7 @@ namespace Orbitools
     /// Encapsulates an angle as a fraction of a complete circle to avoid calculation problems 
     /// caused by different units.
     /// </summary>
-    public struct Angle
+    public struct Angle : IEquatable<Angle>, IComparable<Angle>
     {
         public readonly static Angle TwoPi = Angle.FromRadians(Math.PI * 2);
         public readonly static Angle Pi = Angle.FromRadians(Math.PI);
@@ -196,6 +196,11 @@ namespace Orbitools
         public override string ToString()
         {
             return Radians + " radians";
+        }
+
+        public int CompareTo(Angle other)
+        {
+            return Radians.CompareTo(other.Radians);
         }
     }
 }
