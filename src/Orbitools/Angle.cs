@@ -36,12 +36,27 @@ namespace Orbitools
 
         public static Angle FromDegrees(double value)
         {
-            return Angle.FromFraction(value, 360);
+            return Angle.FromFraction(value, 360d);
         }
 
         public static Angle FromDegrees(double degrees, double minutes, double seconds)
         {
-            return Angle.FromFraction(degrees + Math.Sign(degrees) * minutes / 60 + Math.Sign(degrees) * seconds / 3600, 360);
+            var sign = Sign(degrees, minutes, seconds);
+            return Angle.FromFraction(degrees + sign * Math.Abs(minutes) / 60d + sign * Math.Abs(seconds) / 3600d, 360d);
+        }
+
+        private static int Sign(double a, double b, double c)
+        {
+            var sign = Math.Sign(a);
+            if (sign == 0)
+            {
+                sign = Math.Sign(b);
+                if (sign == 0)
+                {
+                    sign = Math.Sign(c);
+                }
+            }
+            return sign;
         }
 
         public static Angle FromRadians(double value)
@@ -56,14 +71,15 @@ namespace Orbitools
 
         public static Angle FromHours(double hours, double minutes, double seconds)
         {
-            return Angle.FromFraction(hours + Math.Sign(hours) * minutes / 60 + Math.Sign(hours) * seconds / 3600, 24);
+            var sign = Sign(hours, minutes, seconds);
+            return Angle.FromFraction(hours + sign * Math.Abs(minutes) / 60d + sign * Math.Abs(seconds) / 3600d, 24d);
         }
 
         public double Degrees
         {
             get
             {
-                return Radians * 180 / Math.PI;
+                return Radians * 180d / Math.PI;
             }
         }
 
@@ -79,7 +95,7 @@ namespace Orbitools
         {
             get
             {
-                return Radians * 12 / Math.PI;
+                return Radians * 12d / Math.PI;
             }
         }
 
@@ -87,24 +103,24 @@ namespace Orbitools
         {
             get
             {
-                return Radians / 2 / Math.PI;
+                return Radians / 2d / Math.PI;
             }
         }
 
         public Angle Constrain(double maxExclusive)
         {
-            if (maxExclusive > 1 || maxExclusive <= -1)
+            if (maxExclusive > 1d || maxExclusive <= -1d)
             {
                 throw new ArgumentOutOfRangeException();
             }
-            double minInclusive = maxExclusive - 1; 
+            double minInclusive = maxExclusive - 1d; 
             if (Fraction < minInclusive)
             {
-                return Angle.FromFraction(1 + (Fraction % 1));
+                return Angle.FromFraction(1d + (Fraction % 1d));
             }
             else if (Fraction >= maxExclusive)
             {
-                return Angle.FromFraction(Fraction % 1);
+                return Angle.FromFraction(Fraction % 1d);
             }
             else
             {

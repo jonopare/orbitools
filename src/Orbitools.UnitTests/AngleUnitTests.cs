@@ -212,5 +212,21 @@ namespace Orbitools
             var actual = Angle.FromDegrees(-1, 13, 48);
             Assert.AreEqual(0, (actual - expected).Radians, 1e-6);
         }
+
+        [TestMethod]
+        public void Ctor_ZeroDegree_NegativeMinuteSecond()
+        {
+            var expected = Angle.FromDegrees(-0.23);
+            var actual = Angle.FromDegrees(0, -13, 48);
+            Assert.AreEqual(0, (actual - expected).Radians, 1e-6);
+        }
+
+        [TestMethod]
+        public void Ctor_ZeroDegreeMinute_NegativeSecond()
+        {
+            var expected = Angle.FromDegrees(-0.01333);
+            var actual = Angle.FromDegrees(0, 0, -48);
+            Assert.AreEqual(0, (actual - expected).Radians, 1e-6);
+        }
     }
 }
