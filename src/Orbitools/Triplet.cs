@@ -100,7 +100,7 @@ namespace Orbitools
 
         public override string ToString()
         {
-            return string.Format("X={0} Y={1} Z={2} Len={3}", X, Y, Z, Length);
+            return $"X={X} Y={Y} Z={Z} Len={Length}";
         }
     }
 }
