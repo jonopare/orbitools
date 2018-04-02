@@ -40,6 +40,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Extellect.Utilities, Version=1.2.11.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extellect.Utilities.1.2.11\lib\Extellect.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,7 +58,6 @@
     <Compile Include="..\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Angle.cs" />
     <Compile Include="AtmosphericRefractionEffect.cs" />
     <Compile Include="Body.cs" />
     <Compile Include="BodyBuilder.cs" />
@@ -71,6 +76,10 @@
     <Compile Include="Spheroid.cs" />
     <Compile Include="Sundial.cs" />
     <Compile Include="Triplet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="log4net.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

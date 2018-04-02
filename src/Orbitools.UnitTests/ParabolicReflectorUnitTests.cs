@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orbitools;
+using Extellect.Utilities.Math;
 
 namespace Opticks
 {

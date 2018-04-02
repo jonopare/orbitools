@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Extellect.Utilities.Math;
 
 namespace Orbitools
 {
@@ -16,7 +17,7 @@ namespace Orbitools
             var dec = Angle.FromDegrees(75);
             var xyz = CartesianCoordinates.ToCartesian(3 * Angle.PiOverFour, dec, 1);
             var d = xyz.AngularDistance(new Triplet(0, 0, 1));
-            AngleUnitTests.AssertAreEqual(Angle.PiOverTwo - dec, d); 
+            AssertAreEqual(Angle.PiOverTwo - dec, d); 
         }
 
         [TestMethod]
@@ -26,7 +27,7 @@ namespace Orbitools
             var dec = Angle.FromDegrees(89, 15, 50.8);
             var xyz = CartesianCoordinates.ToCartesian(ra, dec, 1);
             var d = xyz.AngularDistance(new Triplet(0, 0, 1));
-            AngleUnitTests.AssertAreEqual(Angle.PiOverTwo - dec, d, Angle.FromDegrees(10e-9)); 
+            AssertAreEqual(Angle.PiOverTwo - dec, d, Angle.FromDegrees(10e-9)); 
         }
 
         [TestMethod]
@@ -36,7 +37,17 @@ namespace Orbitools
             var dec = Angle.FromDegrees(89, 15, 50.8);
             var xyz = CartesianCoordinates.ToRightHanded(ra, dec, 1);
             var d = xyz.AngularDistance(new Triplet(0, 1, 0));
-            AngleUnitTests.AssertAreEqual(Angle.PiOverTwo - dec, d, Angle.FromDegrees(10e-9));
+            AssertAreEqual(Angle.PiOverTwo - dec, d, Angle.FromDegrees(10e-9));
+        }
+
+        private void AssertAreEqual(Angle expected, Angle actual)
+        {
+            AssertAreEqual(expected, actual, Angle.Zero);
+        }
+
+        private void AssertAreEqual(Angle expected, Angle actual, Angle delta)
+        {
+            Assert.AreEqual(expected.Radians, actual.Radians, delta.Radians);
         }
     }
 }
