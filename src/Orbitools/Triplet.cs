@@ -89,7 +89,9 @@ namespace Orbitools
 
         public Angle AngularDistance(Triplet other)
         {
-            return Angle.FromRadians(Math.Acos(Dot(other) / Length / other.Length));
+            // TODO: deal with cos outside of -1 and 1
+            var cos = Dot(other) / Length / other.Length;
+            return Angle.FromRadians(Math.Acos(cos));
         }
 
         public Triplet RotateZ(Angle clockwise)
